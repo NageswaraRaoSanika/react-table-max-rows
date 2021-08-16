@@ -1,30 +1,12 @@
 import React, { useMemo, useCallback } from "react";
 import { useTable, useSortBy, useFilters, useBlockLayout } from "react-table";
-import { FixedSizeList } from 'react-window';
+import { FixedSizeList } from "react-window";
+
 import { DefaultColumnFilter } from "./filters.component";
 
-const Table = () => {
-  const data = useMemo(
-    () => new  Array(10000).fill({
-      col1: "react-table",
-      col2: "rocks",
-    }),
-    []
-  );
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Column 1",
-        accessor: "col1",
-      },
-      {
-        Header: "Column 2",
-        accessor: "col2",
-      },
-    ],
-    []
-  );
+const Table = ({ rows: rowsProp = [], columns: columnsProp = [] }) => {
+  const data = useMemo(() => rowsProp, []);
+  const columns = useMemo(() => columnsProp, []);
 
   const defaultColumn = useMemo(
     () => ({
@@ -50,33 +32,42 @@ const Table = () => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, totalColumnsWidth, prepareRow } =
-    useTable(
-      { columns, data, defaultColumn, filterTypes },
-      useBlockLayout,
-      useFilters,
-      useSortBy
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    totalColumnsWidth,
+    prepareRow,
+  } = useTable(
+    { columns, data, defaultColumn, filterTypes },
+    useBlockLayout,
+    useFilters,
+    useSortBy
+  );
 
   const tableHeader = () => (
     <div>
-      {headerGroups.map(headerGroup => (
+      {headerGroups.map((headerGroup) => (
         <div {...headerGroup.getHeaderGroupProps()} className="tr">
-          {headerGroup.headers.map(column => (
-            <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
-              {column.render('Header')}
+          {headerGroup.headers.map((column) => (
+            <div
+              {...column.getHeaderProps(column.getSortByToggleProps())}
+              className="th"
+            >
+              {column.render("Header")}
               <div onClick={(e) => e.stopPropagation()}>
-                  {column.canFilter ? column.render("Filter") : null}
-                </div>
-                <span>
-                  {column.isSorted ? (
-                    column.isSortedDesc ? (
-                      <>&#8593;</>
-                    ) : (
-                      <>&#8595;</>
-                    )
-                  ) : null }
-                </span>
+                {column.canFilter ? column.render("Filter") : null}
+              </div>
+              <span>
+                {column.isSorted ? (
+                  column.isSortedDesc ? (
+                    <>&#8593;</>
+                  ) : (
+                    <>&#8595;</>
+                  )
+                ) : null}
+              </span>
             </div>
           ))}
         </div>
@@ -86,8 +77,8 @@ const Table = () => {
 
   const renderRow = useCallback(
     ({ index, style }) => {
-      const row = rows[index]
-      prepareRow(row)
+      const row = rows[index];
+      prepareRow(row);
       return (
         <div
           {...row.getRowProps({
@@ -95,18 +86,18 @@ const Table = () => {
           })}
           className="tr"
         >
-          {row.cells.map(cell => {
+          {row.cells.map((cell) => {
             return (
               <div {...cell.getCellProps()} className="td">
-                {cell.render('Cell')}
+                {cell.render("Cell")}
               </div>
-            )
+            );
           })}
         </div>
-      )
+      );
     },
     [prepareRow, rows]
-  )
+  );
 
   return (
     <div {...getTableProps()} className="table">

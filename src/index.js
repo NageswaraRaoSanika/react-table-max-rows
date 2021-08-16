@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Table from './components/table/table.component';
+import App from './components/app/app.component';
 
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Table />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
