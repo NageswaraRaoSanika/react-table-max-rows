@@ -40,6 +40,7 @@ const App = () => {
 
   return (
     <div>
+      <div className="title is-4 ml-6 mt-6 mb-0">React Table Virtualized - 10K Rows</div>
       <Table columns={columns} rows={rows} />
     </div>
   );
