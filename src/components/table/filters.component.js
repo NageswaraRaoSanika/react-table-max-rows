@@ -5,6 +5,7 @@ export const DefaultColumnFilter = ({
 
   return (
     <input
+      className="input is-small is-info"
       value={filterValue || ""}
       onChange={(e) => {
         setFilter(e.target.value || undefined);

@@ -13,7 +13,7 @@ const randomRows = (count) => {
 };
 
 const App = () => {
-  const rows = randomRows(100000);
+  const rows = randomRows(10000);
 
   const columns = [
     {

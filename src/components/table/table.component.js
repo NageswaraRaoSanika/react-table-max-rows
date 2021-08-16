@@ -55,19 +55,21 @@ const Table = ({ rows: rowsProp = [], columns: columnsProp = [] }) => {
               {...column.getHeaderProps(column.getSortByToggleProps())}
               className="th"
             >
-              {column.render("Header")}
-              <div onClick={(e) => e.stopPropagation()}>
+              <div className="column has-text-primary">
+                {column.render("Header")}
+                <small>
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <>&#8593;</>
+                    ) : (
+                      <>&#8595;</>
+                    )
+                  ) : null}
+                </small>
+              </div>
+              <div className="column" onClick={(e) => e.stopPropagation()}>
                 {column.canFilter ? column.render("Filter") : null}
               </div>
-              <span>
-                {column.isSorted ? (
-                  column.isSortedDesc ? (
-                    <>&#8593;</>
-                  ) : (
-                    <>&#8595;</>
-                  )
-                ) : null}
-              </span>
             </div>
           ))}
         </div>
@@ -84,7 +86,7 @@ const Table = ({ rows: rowsProp = [], columns: columnsProp = [] }) => {
           {...row.getRowProps({
             style,
           })}
-          className="tr"
+          className="column"
         >
           {row.cells.map((cell) => {
             return (
@@ -100,7 +102,7 @@ const Table = ({ rows: rowsProp = [], columns: columnsProp = [] }) => {
   );
 
   return (
-    <div {...getTableProps()} className="table">
+    <div {...getTableProps()} className="section">
       {tableHeader()}
       <div {...getTableBodyProps()}>
         <FixedSizeList
